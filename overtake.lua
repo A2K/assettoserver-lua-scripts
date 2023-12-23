@@ -50,13 +50,13 @@ function script.update(dt)
 
             for score in string.gmatch(message, 'YOUR BEST SCORE: (%d+) points')
             do
-                highestScore = math.tointeger(score) or highestScore;
+                highestScore = tonumber(score);
                 addMessage("parsed highestScore: " .. highestScore)
             end
             for score, name in string.gmatch(message, 'ALL%-TIME RECORD: (%d+) points by (%w+)')
             do
                 addMessage("parsed top score: " .. score .. " by " .. name)
-                topScore = math.tointeger(score) or topScore;
+                topScore = tonumber(score);
                 topScorePlayer = name;
             end
         end)
