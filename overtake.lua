@@ -51,15 +51,14 @@ function script.update(dt)
             for score in string.gmatch(message, 'YOUR BEST SCORE: (%d+) points')
             do
                 highestScore = 0 + score;
-                addMessage("parsed highestScore: " .. highestScore)
             end
             for score, name in string.gmatch(message, 'ALL%-TIME RECORD: (%d+) points by (%w+)')
             do
-                addMessage("parsed top score: " .. score .. " by " .. name)
                 topScore = 0 + score;
                 topScorePlayer = name;
             end
         end)
+        ac.sendChatMessage("!scores")
     end
 
     local player = ac.getCarState(1)
