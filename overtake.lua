@@ -48,7 +48,7 @@ function script.update(dt)
                 then
                     return
                 end
-                addMessage(message)
+
                 for score in string.gmatch(message, 'YOUR BEST SCORE: (%d+) points')
                 do
                     addMessage("parsed best score: " .. score)
