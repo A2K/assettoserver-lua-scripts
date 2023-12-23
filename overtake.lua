@@ -30,9 +30,9 @@ local timePassed = 0
 local totalScore = 0
 local comboMeter = 1
 local comboColor = 0
-local topScore = 0
-local topScorePlayer = ""
-local highestScore = 0
+TopScore = 0
+TopScorePlayer = ""
+HighestScore = 0
 local dangerouslySlowTimer = 0
 local carsState = {}
 local wheelsWarningTimeout = 0
@@ -50,7 +50,7 @@ local function handleChatMessage(message, senderCarIndex, senderSessionID)
         if (value)
         then
             addMessage("parsed best score: " .. value)
-            highestScore = value;
+            HighestScore = value;
         end
     end
     for score, name in string.gmatch(message, 'ALL%-TIME RECORD: (%d+) points by (%w+)')
@@ -59,8 +59,8 @@ local function handleChatMessage(message, senderCarIndex, senderSessionID)
         if (value)
         then
             addMessage("parsed top score: " .. value)
-            topScore = value;
-            topScorePlayer = name;
+            TopScore = value;
+            TopScorePlayer = name;
         end
     end
 end
@@ -74,8 +74,8 @@ function script.update(dt)
 
     local player = ac.getCarState(1)
     if player.engineLifeLeft < 1 then
-        if totalScore > highestScore then
-            highestScore = math.floor(totalScore)
+        if totalScore > HighestScore then
+            HighestScore = math.floor(totalScore)
             ac.sendChatMessage("scored " .. totalScore .. " points.")
         end
         totalScore = 0
@@ -104,8 +104,8 @@ function script.update(dt)
 
     if player.speedKmh < requiredSpeed then
         if dangerouslySlowTimer > 3 then
-            if totalScore > highestScore then
-                highestScore = math.floor(totalScore)
+            if totalScore > HighestScore then
+                HighestScore = math.floor(totalScore)
                 ac.sendChatMessage("scored " .. totalScore .. " points.")
             end
             totalScore = 0
@@ -148,8 +148,8 @@ function script.update(dt)
                 addMessage("Collision", -1)
                 state.collided = true
 
-                if totalScore > highestScore then
-                    highestScore = math.floor(totalScore)
+                if totalScore > HighestScore then
+                    HighestScore = math.floor(totalScore)
                     ac.sendChatMessage("scored " .. totalScore .. " points.")
                 end
                 totalScore = 0
@@ -271,8 +271,8 @@ function script.drawUI()
 
     ui.pushStyleVar(ui.StyleVar.Alpha, 1 - speedWarning)
     ui.pushFont(ui.Font.Main)
-    ui.text("Top Score: " .. topScore .. " pts by " .. topScorePlayer)
-    ui.text("Your Highest Score: " .. highestScore .. " pts")
+    ui.text("Top Score: " .. TopScore .. " pts by " .. TopScorePlayer)
+    ui.text("Your Highest Score: " .. HighestScore .. " pts")
     ui.popFont()
     ui.popStyleVar()
 
