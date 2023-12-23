@@ -121,7 +121,7 @@ function script.update(dt)
                 state.drivingAlong = false
             end
 
-            if not state.nearMiss and car.pos:closerToThan(player.pos, 3) then
+            if not state.nearMiss and car.pos:closerToThan(player.pos, 2.5) then
                 state.nearMiss = true
             end
 
