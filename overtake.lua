@@ -38,38 +38,38 @@ local carsState = {}
 local wheelsWarningTimeout = 0
 
 
+local function handleChatMessage(message, senderCarIndex, senderSessionID)
+    if (senderSessionID < 255)
+    then
+        return
+    end
+
+    for score in string.gmatch(message, 'YOUR BEST SCORE: (%d+) points')
+    do
+        local value = math.tointeger(score);
+        if (value)
+        then
+            addMessage("parsed best score: " .. value)
+            highestScore = value;
+        end
+    end
+    for score, name in string.gmatch(message, 'ALL%-TIME RECORD: (%d+) points by (%w+)')
+    do
+        local value = math.tointeger(score);
+        if (value)
+        then
+            addMessage("parsed top score: " .. value)
+            topScore = value;
+            topScorePlayer = name;
+        end
+    end
+end
+
 function script.update(dt)
     if timePassed == 0 then
         addMessage("Let’s go!", 0)
 
-        ac.onChatMessage(
-            function (message, senderCarIndex, senderSessionID)
-                if (senderSessionID < 255)
-                then
-                    return
-                end
-
-                for score in string.gmatch(message, 'YOUR BEST SCORE: (%d+) points')
-                do
-                    addMessage("parsed best score: " .. score)
-                    local value = math.tointeger(score);
-                    if (value)
-                    then
-                        highestScore = value;
-                    end
-                end
-                for score, name in string.gmatch(message, 'ALL%-TIME RECORD: (%d+) points by (%w+)')
-                do
-                    addMessage("parsed top score: " .. score)
-                    local value = math.tointeger(score);
-                    if (value)
-                    then
-                        topScore = value;
-                        topScorePlayer = name;
-                    end
-                end
-            end
-        )
+        ac.onChatMessage(handleChatMessage)
     end
 
     local player = ac.getCarState(1)
@@ -131,10 +131,10 @@ function script.update(dt)
             if not drivingAlong then
                 state.drivingAlong = false
 
-                if not state.nearMiss and car.pos:closerToThan(player.pos, 3) then
+                if not state.nearMiss and car.pos:closerToThan(player.pos, 8) then
                     state.nearMiss = true
 
-                    if car.pos:closerToThan(player.pos, 2.5) then
+                    if car.pos:closerToThan(player.pos, 5) then
                         comboMeter = comboMeter + 3
                         addMessage("Very close near miss!", 1)
                     else
