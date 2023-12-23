@@ -39,8 +39,10 @@ local wheelsWarningTimeout = 0
 
 ac.onChatMessage(
     function (message, senderCarIndex, senderSessionID)
+        addMessage(message)
         for score in string.gmatch(message, '[SERVER] YOUR BEST SCORE: (%d+) points')
         do
+            ac.sendChatMessage("received my best score: " .. score .. " points.")
             local value = math.tointeger(score);
             if (value)
             then
@@ -49,6 +51,7 @@ ac.onChatMessage(
         end
         for score, name in string.gmatch(message, '[SERVER] ALL-TIME RECORD: (%d+) points by (%w+)')
         do
+            ac.sendChatMessage("received all-time best score: " .. score .. " points.")
             local value = math.tointeger(score);
             if (value)
             then
