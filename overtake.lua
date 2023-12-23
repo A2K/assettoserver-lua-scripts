@@ -18,9 +18,13 @@
 -- Event configuration:
 local requiredSpeed = 80
 
+function onChatMessage(message, author)
+    ac.sendChatMessage(author + ": " + message)
+end
 
 -- This function is called before event activates. Once it returns true, it’ll run:
 function script.prepare(dt)
+    ac.addOnChatMessageListener(onChatMessage)
     ac.debug("speed", ac.getCarState(1).speedKmh)
     return ac.getCarState(1).speedKmh > 60
 end
