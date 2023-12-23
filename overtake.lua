@@ -51,7 +51,7 @@ function script.update(dt)
                 addMessage(message)
                 for score in string.gmatch(message, 'YOUR BEST SCORE: (%d+) points')
                 do
-                    ac.sendChatMessage("received my best score: " .. score .. " points.")
+                    addMessage("parsed best score: " .. score)
                     local value = math.tointeger(score);
                     if (value)
                     then
@@ -60,7 +60,7 @@ function script.update(dt)
                 end
                 for score, name in string.gmatch(message, 'ALL-TIME RECORD: (%d+) points by (%w+)')
                 do
-                    ac.sendChatMessage("received all-time best score: " .. score .. " points.")
+                    addMessage("parsed top score: " .. score)
                     local value = math.tointeger(score);
                     if (value)
                     then
