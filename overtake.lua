@@ -37,34 +37,35 @@ local dangerouslySlowTimer = 0
 local carsState = {}
 local wheelsWarningTimeout = 0
 
-ac.onChatMessage(
-    function (message, senderCarIndex, senderSessionID)
-        addMessage(message)
-        for score in string.gmatch(message, '[SERVER] YOUR BEST SCORE: (%d+) points')
-        do
-            ac.sendChatMessage("received my best score: " .. score .. " points.")
-            local value = math.tointeger(score);
-            if (value)
-            then
-                highestScore = value;
-            end
-        end
-        for score, name in string.gmatch(message, '[SERVER] ALL-TIME RECORD: (%d+) points by (%w+)')
-        do
-            ac.sendChatMessage("received all-time best score: " .. score .. " points.")
-            local value = math.tointeger(score);
-            if (value)
-            then
-                topScore = value;
-                topScorePlayer = name;
-            end
-        end
-    end
-)
 
 function script.update(dt)
     if timePassed == 0 then
         addMessage("Let’s go!", 0)
+
+        ac.onChatMessage(
+            function (message, senderCarIndex, senderSessionID)
+                addMessage(message)
+                for score in string.gmatch(message, '[SERVER] YOUR BEST SCORE: (%d+) points')
+                do
+                    ac.sendChatMessage("received my best score: " .. score .. " points.")
+                    local value = math.tointeger(score);
+                    if (value)
+                    then
+                        highestScore = value;
+                    end
+                end
+                for score, name in string.gmatch(message, '[SERVER] ALL-TIME RECORD: (%d+) points by (%w+)')
+                do
+                    ac.sendChatMessage("received all-time best score: " .. score .. " points.")
+                    local value = math.tointeger(score);
+                    if (value)
+                    then
+                        topScore = value;
+                        topScorePlayer = name;
+                    end
+                end
+            end
+        )
     end
 
     local player = ac.getCarState(1)
