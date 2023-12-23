@@ -15,10 +15,6 @@
 --   and possibly record short replays?
 -- • Remote future: control scene, AIs, spawn extra geometry and so on.
 
-function string.starts(String,Start)
-    return string.sub(String,1,string.len(Start))==Start
- end
-
 -- Event configuration:
 local requiredSpeed = 80
 -- This function is called before event activates. Once it returns true, it’ll run:
@@ -243,11 +239,13 @@ function script.drawUI()
     local uiState = ac.getUiState()
     updateMessages(uiState.dt)
 
+    --[[
     if (!bUpdatedScores)
     then
         bUpdatedScores = true
         ac.sendChatMessage("!scores")
     end
+    ]]
 
     local speedRelative = math.saturate(math.floor(ac.getCarState(1).speedKmh) / requiredSpeed)
     speedWarning = math.applyLag(speedWarning, speedRelative < 1 and 1 or 0, 0.5, uiState.dt)
