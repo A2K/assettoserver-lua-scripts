@@ -41,7 +41,8 @@ function script.update(dt)
     if timePassed == 0 then
         addMessage("Let’s go!", 0)
 
-        ac.onChatMessage(function(message, senderCarIndex, senderSessionID)
+        ac.onChatMessage(
+        function(message, senderCarIndex, senderSessionID)
             if (senderSessionID < 255)
             then
                 return
@@ -54,9 +55,9 @@ function script.update(dt)
             end
             for score, name in string.gmatch(message, 'ALL%-TIME RECORD: (%d+) points by (%w+)')
             do
+                addMessage("parsed top score: " .. score .. " by " .. name)
                 topScore = math.tointeger(score) or topScore;
                 topScorePlayer = name;
-                addMessage("parsed top score: " .. topScore .. " by " .. name)
             end
         end)
     end
