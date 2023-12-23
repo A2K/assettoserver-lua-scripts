@@ -234,18 +234,9 @@ local function updateMessages(dt)
 end
 
 local speedWarning = 0
-local bUpdatedScores = false
 function script.drawUI()
     local uiState = ac.getUiState()
     updateMessages(uiState.dt)
-
-    --[[
-    if (!bUpdatedScores)
-    then
-        bUpdatedScores = true
-        ac.sendChatMessage("!scores")
-    end
-    ]]
 
     local speedRelative = math.saturate(math.floor(ac.getCarState(1).speedKmh) / requiredSpeed)
     speedWarning = math.applyLag(speedWarning, speedRelative < 1 and 1 or 0, 0.5, uiState.dt)
