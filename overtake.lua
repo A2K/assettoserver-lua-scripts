@@ -246,7 +246,7 @@ function script.drawUI()
     if (!bUpdatedScores)
     then
         bUpdatedScores = true
-        ac.sendChatMessage("/scores")
+        ac.sendChatMessage("!scores")
     end
 
     local speedRelative = math.saturate(math.floor(ac.getCarState(1).speedKmh) / requiredSpeed)
