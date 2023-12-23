@@ -20,7 +20,8 @@ local requiredSpeed = 80
 
 -- This function is called before event activates. Once it returns true, it’ll run:
 function script.prepare(dt)
-    ac.addOnChatMessageListener(onChatMessage)
+    appWindow=ac.newApp("Python Chat")
+    ac.addOnChatMessageListener(appWindow, onChatMessage)
     ac.debug("speed", ac.getCarState(1).speedKmh)
     return ac.getCarState(1).speedKmh > 60
 end
