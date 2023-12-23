@@ -19,8 +19,8 @@
 local requiredSpeed = 80
 ac.onChatMessage(
     function (message, senderCarIndex, senderSessionID)
-        addMessage(message, 0);
-        ac.log(message)
+        ac.log('CHAT MESSAGE RECEIVED')
+        addMessage(message, 0)
     end
 )
 -- This function is called before event activates. Once it returns true, it’ll run:
@@ -30,9 +30,6 @@ function script.prepare(dt)
     return ac.getCarState(1).speedKmh > 60
 end
 
-function onChatMessage(message, author)
-    addMessage(message, 0)
-end
 
 -- Event state:
 local timePassed = 0
