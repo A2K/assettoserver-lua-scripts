@@ -37,31 +37,28 @@ local dangerouslySlowTimer = 0
 local carsState = {}
 local wheelsWarningTimeout = 0
 
-
-local function handleChatMessage(message, senderCarIndex, senderSessionID)
-    if (senderSessionID < 255)
-    then
-        return
-    end
-
-    for score in string.gmatch(message, 'YOUR BEST SCORE: (%d+) points')
-    do
-        highestScore = math.tointeger(score) or highestScore;
-        addMessage("parsed highestScore: " .. highestScore)
-    end
-    for score, name in string.gmatch(message, 'ALL%-TIME RECORD: (%d+) points by (%w+)')
-    do
-        topScore = math.tointeger(score) or topScore;
-        topScorePlayer = name;
-        addMessage("parsed top score: " .. topScore)
-    end
-end
-
 function script.update(dt)
     if timePassed == 0 then
         addMessage("Let’s go!", 0)
 
-        ac.onChatMessage(handleChatMessage)
+        ac.onChatMessage(function(message, senderCarIndex, senderSessionID)
+            if (senderSessionID < 255)
+            then
+                return
+            end
+
+            for score in string.gmatch(message, 'YOUR BEST SCORE: (%d+) points')
+            do
+                highestScore = math.tointeger(score) or highestScore;
+                addMessage("parsed highestScore: " .. highestScore)
+            end
+            for score, name in string.gmatch(message, 'ALL%-TIME RECORD: (%d+) points by (%w+)')
+            do
+                topScore = math.tointeger(score) or topScore;
+                topScorePlayer = name;
+                addMessage("parsed top score: " .. topScore .. " by " .. name)
+            end
+        end)
     end
 
     local player = ac.getCarState(1)
