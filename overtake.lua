@@ -121,16 +121,8 @@ function script.update(dt)
                 state.drivingAlong = false
             end
 
-            if not state.nearMiss and car.pos:closerToThan(player.pos, 8) then
+            if not state.nearMiss and car.pos:closerToThan(player.pos, 3) then
                 state.nearMiss = true
-
-                if car.pos:closerToThan(player.pos, 5) then
-                    comboMeter = comboMeter + 3
-                    addMessage("Very close near miss!", 1)
-                else
-                    comboMeter = comboMeter + 1
-                    addMessage("Near miss: bonus combo", 0)
-                end
             end
 
             if car.collidedWith == 0 then
@@ -155,6 +147,11 @@ function script.update(dt)
                     comboColor = comboColor + 90
                     addMessage("Overtake", comboMeter > 20 and 1 or 0)
                     state.overtaken = true
+                    if state.nearMiss
+                    then
+                        comboMeter = comboMeter + 1
+                        addMessage("Near miss: bonus combo", 1)
+                    end
                 end
             end
         else
