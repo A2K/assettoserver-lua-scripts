@@ -45,7 +45,7 @@ function script.update(dt)
         ac.onChatMessage(
             function (message, senderCarIndex, senderSessionID)
                 addMessage(message)
-                for score in string.gmatch(message, '[SERVER] YOUR BEST SCORE: (%d+) points')
+                for score in string.gmatch(message, '[[]SERVER[]] YOUR BEST SCORE: (%d+) points')
                 do
                     ac.sendChatMessage("received my best score: " .. score .. " points.")
                     local value = math.tointeger(score);
@@ -54,7 +54,7 @@ function script.update(dt)
                         highestScore = value;
                     end
                 end
-                for score, name in string.gmatch(message, '[SERVER] ALL-TIME RECORD: (%d+) points by (%w+)')
+                for score, name in string.gmatch(message, '[[]SERVER[]] ALL-TIME RECORD: (%d+) points by (%w+)')
                 do
                     ac.sendChatMessage("received all-time best score: " .. score .. " points.")
                     local value = math.tointeger(score);
